@@ -1,0 +1,104 @@
+<!-- I have created only Database(MYSQL) and Backend(Node.js,Express.js) -->
+
+
+<!-- Card Management API -->
+
+This is a simple Node.js and Express-based API for managing cards with titles, descriptions, and links. The API allows you to create new cards, retrieve all cards, filter cards by title, and get a card by its exact title.
+
+<!-- Features -->
+
+Get All Cards: Retrieve all cards stored in the database.
+Filter Cards by Title: Retrieve cards that match a specific title or part of a title.
+Get Card by Exact Title: Retrieve a card by providing its exact title.
+Create a New Card: Add a new card with a title, description, and optional link.
+
+<!-- Prerequisites -->
+
+Before you begin, ensure you have the following installed:
+
+Node.js (v12.x or later)
+MySQL
+
+<!-- Setup Instructions -->
+
+Follow these steps to set up and run the project locally.
+
+1. Clone the Repository
+   git clone https://github.com/your-username/card-management-api.git
+   cd card-management-api
+
+2. Install Dependencies
+   Navigate to the project directory and install the necessary Node.js dependencies:
+   npm install
+
+3. Set Up the MySQL Database
+   1.Create a Database:
+
+   Open your MySQL client (e.g., MySQL Workbench, command-line).
+   Create a new database, e.g., card_db.
+   CREATE DATABASE help_center_db;
+
+   2.Create the Cards Table:
+   Switch to the newly created database:
+
+   USE help_center_db;
+   CREATE TABLE cards (
+   id VARCHAR(255) PRIMARY KEY,
+   title VARCHAR(255) NOT NULL,
+   description TEXT,
+   link VARCHAR(255)
+   );
+
+4. Configure the Database Connection
+
+   const mysql = require('mysql');
+
+   const connection = mysql.createConnection({
+   host: 'localhost',
+   user: 'your_username', // Replace with your MySQL username
+   password: 'your_password', // Replace with your MySQL password
+   database: 'card_db' // Replace with your database name
+   });
+
+   connection.connect((err) => {
+   if (err) {
+   console.error('Error connecting to the database:', err.stack);
+   return;
+   }
+   console.log('Connected to the database.');
+   });
+
+   module.exports = connection;
+
+5. Run the Project
+
+   npm start
+
+<!-- API Endpoints -->
+
+Get All Cards (with optional title filtering):
+
+GET /cards
+To filter by title: GET /cards?title=your-title
+Example: GET /cards?title=Branches
+Get Card by Exact Title:
+
+GET /cards/:title
+Example: GET /cards/Branches
+Create a New Card:
+
+POST /cards
+Body (JSON):
+{
+"title": "New Card Title",
+"description": "Description of the card",
+"link": "http://optional-link.com"
+}
+
+<!-- Troubleshooting -->
+
+If you encounter any issues, ensure that:
+
+MySQL is running and accessible.
+The database connection settings in config/db.js are correct.
+All dependencies are installed with npm install.
